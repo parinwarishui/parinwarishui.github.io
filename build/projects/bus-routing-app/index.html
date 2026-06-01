@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parinwaris (Hui) Pangprasertgul · Phuket Bus Routing Application</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      // 🎨 TAILWIND SEMANTIC MAPPING 🎨
+      // This maps Tailwind classes to our centralized CSS variables.
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              background: "var(--color-background)",
+              foreground: "var(--color-foreground)",
+              box: "var(--color-box)",
+              boxBorder: "var(--color-box-border)",
+              textMain: "var(--color-text-main)",
+              textMuted: "var(--color-text-muted)",
+              heading: "var(--color-heading)",
+              accent: "var(--color-accent)",
+            },
+            fontFamily: {
+              sans: ['"Helvetica Neue"', "Helvetica", "Arial", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <style>
+      /* 🎨 THE CENTRAL COLOR CONTROL HUB 🎨 
+       Change these hex codes to completely re-theme your website instantly. */
+      :root {
+        --color-background: #fffeeb; /* Light pastel ocean breeze */
+        --color-foreground: #fff9d2; /* Pastel Pearl / warm soft sand */
+        --color-box: #fff9d2;
+        --color-box-border: #efe3ca; /* Soft ocean foam blue */
+        --color-text-main: #0f2854; /* Deep Blumine blue for readable contrast */
+        --color-text-muted: #46707d; /* Muted mid-tone ocean teal */
+        --color-heading: #1c4d8d; /* Anchoring dark navy */
+        --color-accent: #216d84; /* Energetic Neptune pastel blue */
+      }
+
+      /* Base page colour */
+      body {
+        background-color: var(--color-background);
+        color: var(--color-text-main);
+      }
+
+      /* Smooth scrollbar colour on webkit browsers */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--color-background);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--color-box-border);
+        border-radius: 3px;
+      }
+
+      /* Markdown content styles — applied inside .prose wrapper */
+      .prose h1,
+      .prose h2,
+      .prose h3 {
+        color: var(--color-heading);
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+        font-weight: 600;
+      }
+      .prose h1 {
+        font-size: 1.6rem;
+      }
+      .prose h2 {
+        font-size: 1.3rem;
+        border-bottom: 1px solid var(--color-box-border);
+        padding-bottom: 0.3em;
+      }
+      .prose h3 {
+        font-size: 1.1rem;
+        color: var(--color-accent);
+      }
+      .prose p {
+        margin-bottom: 1em;
+        line-height: 1.75;
+        color: var(--color-text-main);
+      }
+      .prose a {
+        color: var(--color-accent);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .prose a:hover {
+        filter: brightness(1.2);
+      }
+      .prose ul {
+        list-style: disc;
+        padding-left: 1.5em;
+        margin-bottom: 1em;
+      }
+      .prose ol {
+        list-style: decimal;
+        padding-left: 1.5em;
+        margin-bottom: 1em;
+      }
+      .prose li {
+        margin-bottom: 0.3em;
+        color: var(--color-text-main);
+      }
+      .prose blockquote {
+        border-left: 3px solid var(--color-accent);
+        padding-left: 1em;
+        color: var(--color-text-muted);
+        font-style: italic;
+        margin: 1em 0;
+      }
+      .prose table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1em;
+      }
+      .prose th {
+        background: var(--color-box-border);
+        color: var(--color-accent);
+        padding: 0.5em 0.8em;
+        text-align: left;
+      }
+      .prose td {
+        border-top: 1px solid var(--color-box-border);
+        padding: 0.5em 0.8em;
+        color: var(--color-text-main);
+      }
+      .prose pre {
+        border-radius: 8px;
+        margin: 1em 0;
+        overflow-x: auto;
+      }
+      .prose code {
+        font-family: "Fira Code", "Courier New", monospace;
+        font-size: 0.88em;
+      }
+
+      /* Inline code (not inside a pre block) */
+      .prose :not(pre) > code {
+        background: var(--color-box-border);
+        color: var(--color-accent);
+        padding: 0.15em 0.4em;
+        border-radius: 4px;
+      }
+
+      /* Image caption — write as: *Caption text* directly below an image */
+      .prose img + em {
+        display: block;
+        text-align: center;
+        font-size: 0.8rem;
+        color: var(--color-text-muted);
+        margin-top: 0.3em;
+      }
+
+      /* Tag pill */
+      .tag {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 500;
+        padding: 2px 10px;
+        border-radius: 999px;
+        background: var(--color-box-border);
+        color: var(--color-accent);
+      }
+    </style>
+  </head>
+
+  <body class="font-sans min-h-screen">
+    <nav
+      class="fixed top-0 left-0 right-0 h-14 z-50 bg-foreground border-b border-boxBorder flex items-center px-6 gap-8"
+    >
+      <a
+        href="/"
+        class="text-accent font-semibold tracking-wide text-sm shrink-0"
+        >hui's portfolio.</a
+      >
+
+      <div class="flex gap-6 ml-auto text-sm">
+         
+        <a
+          href="/"
+          class="text-textMuted hover:text-heading
+                  transition-colors duration-150"
+        >
+          Home
+        </a>
+         
+        <a
+          href="/projects/"
+          class="text-accent
+                  transition-colors duration-150"
+        >
+          Projects
+        </a>
+         
+        <a
+          href="/blog/"
+          class="text-textMuted hover:text-heading
+                  transition-colors duration-150"
+        >
+          Blog
+        </a>
+         
+        <a
+          href="/cv/"
+          class="text-textMuted hover:text-heading
+                  transition-colors duration-150"
+        >
+          CV
+        </a>
+         
+        <a
+          href="/search/"
+          class="text-textMuted hover:text-heading
+                  transition-colors duration-150"
+        >
+          Search
+        </a>
+        
+      </div>
+    </nav>
+
+    <div class="flex pt-14 min-h-screen">
+      <aside
+        class="fixed top-14 left-0 bottom-0 w-72 bg-box border-r border-boxBorder flex flex-col items-center pt-10 pb-6 px-6 overflow-y-auto z-40"
+      >
+        <img
+          src="/static/img/parinwaris.jpg"
+          alt="Parinwaris (Hui) Pangprasertgul"
+          onerror="
+            this.src =
+              'https://ui-avatars.com/api/?name=PP&background=162d55&color=64ffda&size=120'
+          "
+          class="w-28 h-28 rounded-full object-cover border-2 border-accent mb-5"
+        />
+
+        <h1
+          class="text-heading font-semibold text-center text-base leading-snug mb-1"
+        >
+          Parinwaris (Hui) Pangprasertgul
+        </h1>
+
+        <p class="text-textMuted text-xs text-center mb-5">Computer Science &amp; Design · SUTD</p>
+
+        <div class="w-12 h-px bg-boxBorder mb-5"></div>
+
+        <p class="text-textMuted text-xs text-center leading-relaxed mb-6">
+          Passionate in data science, smart cities, and user experience.
+        </p>
+
+        <div class="flex gap-4 mt-auto">
+          <a
+            href="https://github.com/parinwarishui"
+            target="_blank"
+            title="GitHub"
+            class="text-textMuted hover:text-accent transition-colors"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 007.86 10.93c.57.1.78-.25.78-.55v-2.1c-3.19.69-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.27-5.23-5.67 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.14 1.17a10.93 10.93 0 015.72 0c2.18-1.48 3.14-1.17 3.14-1.17.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.07 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.07.78 2.15v3.19c0 .3.2.66.79.55A11.5 11.5 0 0023.5 12C23.5 5.73 18.27.5 12 .5z"
+              />
+            </svg>
+          </a>
+
+          <a
+            href="https://linkedin.com/in/parinwaris-pangprasertgul"
+            target="_blank"
+            title="LinkedIn"
+            class="text-textMuted hover:text-accent transition-colors"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"
+              />
+            </svg>
+          </a>
+
+          <a
+            href="mailto:parinwaris.pangprasertgul@gmail.com"
+            title="Email"
+            class="text-textMuted hover:text-accent transition-colors"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              />
+            </svg>
+          </a>
+        </div>
+      </aside>
+
+      <main class="ml-72 flex-1 min-h-screen">
+        <div class="max-w-3xl mx-auto px-8 py-12">
+          
+
+<a
+  href="/projects/"
+  class="text-textMuted hover:text-accent text-sm transition-colors"
+>
+  ← All projects
+</a>
+
+
+
+<div class="mt-6 mb-8">
+  <h1 class="text-2xl font-semibold text-heading mb-2">Phuket Bus Routing Application</h1>
+  <div class="flex items-center gap-3 flex-wrap">
+    <span class="text-textMuted text-sm">2024-01-23</span>
+    
+    <span class="tag">python</span>
+    
+    <span class="tag">pyqt5</span>
+    
+    <span class="tag">transport</span>
+    
+    <span class="tag">application</span>
+    
+    <span class="tag">algorithms</span>
+    
+    <span class="tag">buses</span>
+    
+  </div>
+</div>
+
+<article class="prose"><p><img alt="Image of a Phothong bus in Phuket, Thailand" src="/static/img/phothong-bus.jpg" /><br />
+<em>Image of a Phothong bus in Phuket, Thailand. Source: Phuket One Map</em></p>
+<h2>Overview</h2>
+<p>This project was developed to address the inconvenience of traveling on the Phothong bus in Phuket, which is caused by a lack of easily accessible information regarding stops, routes, fares, and schedules. To solve this, me and my friend Pacharakamon Wattanasiri at Mahidol Wittayanusorn School (MWIT) developed a Python-based program that identifies the optimal bus route and calculates the fare for commuters.</p>
+<p>This project was an eye-opening experience to create applications as solutions to real-world problems, in the end, I have learned many lessons on how to overcome certain limitations and how to process real-world data which is often times inconsistent. This would be my beginning to pursue studies in Computer Science later on.</p>
+<h2>Data Processing</h2>
+<p>At first, the data was decentralized and inconsistent across different operators and websites. We had to manually search for the data and combine them into a single source of truth for the procedures afterwards.</p>
+<p><img alt="Image of a graph consisting of all bus stops in Phuket, drawn on drawio." src="/static/img/phothong-map.png" /><br />
+<em>Image of a graph consisting of all bus stops in Phuket, drawn on drawio.</em></p>
+<h2>Algorithmic Optimization</h2>
+<p>The Phothong map in Phuket contains over 125 stops. Running a standard pathfinding algorithm across a graph of this size can be inefficient, so we adapted Dijkstra's algorithm as our core route-finding method, along with a procedure to decrease the size of the graph required for computation to minimize overall runtime.</p>
+<p>Our architectural approach involved decoupling the transit network:</p>
+<ul>
+<li>We categorized the network into <strong>"main stops"</strong> and <strong>"sub-stops"</strong>.</li>
+<li>A sub-stop was defined as a bus stop where the bus routes passing by it are identical to those of the connected stops.</li>
+<li>Main stops were defined as points where a Phothong line diverges or terminates.</li>
+<li>The program calculates <strong>the shortest path within the main graph</strong>, which consists of only 34 main stops, significantly reducing the time spent searching the same subgraph.</li>
+<li>The program calculates the shortest route between the starting node and connected main stops, as well as the ending node and its connected main stops separately.</li>
+<li>The <code>PriorityQueue</code> library was implemented in the program to find the shortest route in the graph according to Dijkstra's algorithm.</li>
+</ul>
+<h2>Line Assignment</h2>
+<p>After calculating the shortest distance, we also implemented a system to assign bus routes the user needs to take to travel along the finalized route, and constant fare rate calculation. Once the shortest physical path is found, the program determines which buses to board.</p>
+<ul>
+<li>The program creates a list of all bus lines passing through each stop on the route is created.</li>
+<li>It filters these lists to remove lines that don't continue to the next stop, keeping the lines with the cheapest fares.</li>
+<li>If a stop's list becomes empty during filtering, the program identifies that stop as a mandatory "Transfer" point.</li>
+</ul>
+<h2>User Interface</h2>
+<p>To make this program accessible for users, we built a <strong>graphical user interface</strong> prototype using the <code>PyQt5</code> module. Users can input their starting point and destination into the application. The program subsequently provides the <strong>shortest route</strong> (using the algoriths mentioned above), along with <strong>fare details and recommended lines</strong> to take.</p>
+<p><img alt="Phothong App Screen" src="/static/img/phothong-app-screen.png" /><br />
+<em>Image of the graphical user interface prototype.</em></p>
+<h2>Computational Results</h2>
+<p>By restructuring the graph topology and limiting the execution of Dijkstra's algorithm only to the main stops, the program saw a massive increase in computational efficiency. The runtimes of the application using our modified algorithm were approximately 25,000x less than the runtime using a standard Dijkstra's algorithm implementation.</p>
+<h2>Awards</h2>
+<p>This project was awarded the "Best Oral Presentation Award" at the STT49 Conference at Prince of Songkhla University, Thailand. Please see the full conference paper <a href="https://drive.google.com/file/d/1xII83ddFJk44DrPCMfu0_OaPCiO37_Po/view?usp=sharing">here</a>.</p>
+<h2>Limitations &amp; Future Considerations</h2>
+<p>This project's main goal is to showcase a modified version of Dijkstra's algorithm by cutting out inefficient bus stops for more efficient calculation. In real-life use cases, there are still clearly some limitations and points to improve in the future.</p>
+<ul>
+<li>
+<p>The application currently finds the most efficient route by only considering physical distance, completely ignoring real-world constraints like bus schedules, live traffic data, waiting times at transfer points, and the sheer number of transfers a user might have to make. A route that is physically shorter but requires three transfers might take an hour longer than a slightly longer direct route.</p>
+</li>
+<li>
+<p>The algorithm connects the source and destination to "their nearest main stops". If a user is at a sub-stop where the nearest main stop is in the opposite direction of their actual destination, the algorithm will mathematically force them to travel backward to that main stop before turning around, resulting in an inefficient real-world itinerary.</p>
+</li>
+<li>
+<p>The program relies on statically collected fare data and distances from various existing sources. If the operators of these different bus routes change a route or update ticket prices, the application's underlying dictionaries would have to be manually hard-coded and updated. A great lesson for me to learn from that point onwards is to create apps that are scalable and can adapt to changes.</p>
+</li>
+</ul>
+<h2>Links</h2>
+<ul>
+<li><a href="https://drive.google.com/file/d/1xII83ddFJk44DrPCMfu0_OaPCiO37_Po/view?usp=sharing">STT49 Conference Paper</a></li>
+</ul>
+<hr /></article>
+
+
+        </div>
+      </main>
+    </div>
+
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

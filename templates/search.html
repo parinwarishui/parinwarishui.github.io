@@ -1,0 +1,111 @@
+{% extends "base.html" %} {% block content %}
+
+<h2 class="text-2xl font-semibold text-heading mb-1">Search</h2>
+<p class="text-textMuted text-sm mb-6">
+  Search posts and projects, or filter by tag.
+</p>
+
+<input
+  id="search-input"
+  type="text"
+  placeholder="Search by title, tag, or keyword..."
+  class="w-full bg-box border border-boxBorder focus:border-accent rounded-xl px-4 py-3 text-textMain text-sm outline-none mb-6 placeholder-textMuted transition-colors"
+/>
+
+<div id="tag-cloud" class="flex flex-wrap gap-2 mb-8"></div>
+
+<div id="results" class="flex flex-col gap-3"></div>
+<p id="no-results" class="text-textMuted text-sm hidden">No results found.</p>
+
+<script>
+  // Parse the index that Flask serialised for us
+  const INDEX = {{ search_index | safe }};
+
+  let activeTags = [];   // currently selected tag filter
+
+  // ── Build tag cloud ───────────────────────────────────────────────────────
+  const allTags = [...new Set(INDEX.flatMap(item => item.tags))].sort();
+  const tagCloud = document.getElementById("tag-cloud");
+
+  allTags.forEach(tag => {
+    const btn = document.createElement("button");
+    btn.textContent = tag;
+    btn.dataset.tag = tag;
+    btn.className = "tag cursor-pointer hover:bg-accent hover:text-background transition-colors";
+    btn.addEventListener("click", () => {
+      if (activeTags.includes(tag)) {
+        activeTags = activeTags.filter(t => t !== tag);
+      } else {
+        activeTags.push(tag);
+      }
+
+      // Update highlighting for all pills
+      document.querySelectorAll("#tag-cloud button").forEach(b => {
+        const isSelected = activeTags.includes(b.dataset.tag);
+        b.classList.toggle("bg-accent", isSelected);
+        b.classList.toggle("text-background", isSelected);
+      });
+      render();
+    });
+    tagCloud.appendChild(btn);
+  });
+
+  // ── Render results ────────────────────────────────────────────────────────
+  function render() {
+    const query  = document.getElementById("search-input").value.toLowerCase();
+    const container = document.getElementById("results");
+    const noResults = document.getElementById("no-results");
+
+    // Filter by search query AND active tag
+    const filtered = INDEX.filter(item => {
+      const matchesTag   = activeTags.every(tag => item.tags.includes(tag));
+      const matchesQuery = !query
+        || item.title.toLowerCase().includes(query)
+        || item.summary.toLowerCase().includes(query)
+        || item.tags.some(t => t.toLowerCase().includes(query));
+      return matchesTag && matchesQuery;
+    });
+
+    container.innerHTML = "";
+
+    if (filtered.length === 0) {
+      noResults.classList.remove("hidden");
+      return;
+    }
+    noResults.classList.add("hidden");
+
+    filtered.forEach(item => {
+      container.innerHTML += `
+        <a href="${item.url}"
+           class="bg-box border border-boxBorder hover:border-accent rounded-xl p-5
+                  transition-colors group block">
+          <div class="flex justify-between items-start gap-4">
+            <div>
+              <p class="text-heading font-medium group-hover:text-accent transition-colors">
+                ${item.title}
+              </p>
+              <p class="text-textMuted text-sm mt-1">${item.summary}</p>
+            </div>
+            <div class="text-right shrink-0">
+              <span class="text-textMuted text-xs block">${item.date}</span>
+              <span class="text-xs mt-1 inline-block px-2 py-0.5 rounded-full
+                           ${item.type === 'post' ? 'bg-boxBorder text-textMuted' : 'bg-boxBorder text-accent'}">
+                ${item.type}
+              </span>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-3">
+            ${item.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+          </div>
+        </a>`;
+    });
+  }
+
+  // Re-render on every keystroke
+  document.getElementById("search-input").addEventListener("input", render);
+
+  // Show all items on first load
+  render();
+</script>
+
+{% endblock %}

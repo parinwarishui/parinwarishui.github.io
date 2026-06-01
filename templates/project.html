@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% set title = project.title %} {% block content %}
+
+<a
+  href="/projects/"
+  class="text-textMuted hover:text-accent text-sm transition-colors"
+>
+  ← All projects
+</a>
+
+{% if project.image %}
+<img
+  src="{{ project.image }}"
+  alt="{{ project.title }}"
+  class="w-full h-48 object-cover rounded-xl mt-6 mb-6"
+/>
+{% endif %}
+
+<div class="mt-6 mb-8">
+  <h1 class="text-2xl font-semibold text-heading mb-2">{{ project.title }}</h1>
+  <div class="flex items-center gap-3 flex-wrap">
+    <span class="text-textMuted text-sm">{{ project.date }}</span>
+    {% for tag in project.tags %}
+    <span class="tag">{{ tag }}</span>
+    {% endfor %}
+  </div>
+</div>
+
+<article class="prose">{{ project.content | safe }}</article>
+
+{% endblock %}

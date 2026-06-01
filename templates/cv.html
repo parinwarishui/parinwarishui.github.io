@@ -1,0 +1,144 @@
+{% extends "base.html" %} {% block content %}
+
+<h2 class="text-2xl font-semibold text-heading mb-8">CV</h2>
+
+<!-- Education -->
+<section class="mb-8">
+  <h3 class="text-accent text-xs uppercase tracking-widest mb-4">Education</h3>
+  <div class="bg-box border border-boxBorder rounded-xl p-5">
+    <div class="flex justify-between items-start">
+      <div>
+        <p class="text-textMain font-medium">
+          Singapore University of Technology and Design
+        </p>
+        <p class="text-textMuted text-sm">B.Eng Computer Science and Design</p>
+        <p class="text-textMuted text-sm">
+          Minor in Analytics/AI & Human-Centered Design
+        </p>
+      </div>
+      <span class="text-textMuted text-xs">2024 – 2028</span>
+    </div>
+    <p class="text-accent text-sm mt-2">GPA: 4.88 / 5.00</p>
+    <div class="h-8"></div>
+    <div class="flex justify-between items-start">
+      <div>
+        <p class="text-textMain font-medium">Mahidol Wittayanusorn School</p>
+        <p class="text-textMuted text-sm">Thailand High School Diploma</p>
+      </div>
+      <span class="text-textMuted text-xs">2021 - 2024</span>
+    </div>
+    <p class="text-accent text-sm mt-2">GPA: 3.97 / 4.00</p>
+  </div>
+</section>
+
+<!-- Experience -->
+<section class="mb-8">
+  <h3 class="text-accent text-xs uppercase tracking-widest mb-4">Experience</h3>
+  <div class="bg-box border border-boxBorder rounded-xl p-5">
+    <div class="flex justify-between items-start mb-3">
+      <div>
+        <p class="text-textMain font-medium">Software Developer Intern</p>
+        <p class="text-textMuted text-sm">
+          City Development Solutions Co., Ltd.
+        </p>
+      </div>
+      <span class="text-textMuted text-xs">Oct – Dec 2025</span>
+    </div>
+    <ul class="text-textMuted text-sm space-y-1 list-disc list-inside">
+      <li>
+        Architected a FastAPI backend to poll Phuket SmartBus telemetry,
+        powering a dynamic ETA prediction system weighting live vehicle
+        positions against historical speed data.
+      </li>
+      <li>
+        Developed a responsive web dashboard prototype with user interface for
+        real-time bus ETA display, integrating a JSON cache layer to ensure
+        low-latency frontend performance.
+      </li>
+      <li>
+        Engineered an administrative dashboard prototype featuring live
+        operational status flagging, automated GeoJSON route mapping, and data
+        visualization of ETA prediction errors.
+      </li>
+      <li>
+        Implemented a 10-minute offline CSV data buffer to enforce system fault
+        tolerance, maintaining continuous vehicle tracking during upstream API
+        outages.
+      </li>
+      <li>
+        Designed an accuracy validation pipeline to log and visualize ETA
+        prediction errors against actual arrivals, establishing a data-driven
+        baseline for continuous performance monitoring and analysis.
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- Projects -->
+<section class="mb-8">
+  <h3 class="text-accent text-xs uppercase tracking-widest mb-4">Projects</h3>
+  <div class="bg-box border border-boxBorder rounded-xl p-5">
+    <div class="flex justify-between items-start mb-3">
+      <div>
+        <p class="text-textMain font-medium">Custom Hardware Logic Game</p>
+        <p class="text-textMuted text-sm">SUTD</p>
+      </div>
+      <span class="text-textMuted text-xs">Jan - Apr 2026</span>
+    </div>
+    <ul class="text-textMuted text-sm space-y-1 list-disc list-inside">
+      <li>
+        Designed Finite State Machine (FSM) transition maps and Datapath
+        schematics to handle core game loop progression for a custom
+        color-button matching physical arcade game.
+      </li>
+      <li>
+        Formulated data-routing logic and bit-level mapping configurations
+        required to interface with external peripheral LED strips
+      </li>
+      <li>Group project part of 50.002 Computation Structures module.</li>
+    </ul>
+    <div class="h-8"></div>
+    <div class="flex justify-between items-start mb-3">
+      <div>
+        <p class="text-textMain font-medium">Bus Route Finding Application</p>
+        <p class="text-textMuted text-sm">Mahidol Wittayanusorn School</p>
+      </div>
+      <span class="text-textMuted text-xs">May - Sep 2023</span>
+    </div>
+    <ul class="text-textMuted text-sm space-y-1 list-disc list-inside">
+      <li>
+        Developed a Python desktop application to visualize multi-line transfer
+        sequences and calculate transit fares across a decentralized local bus
+        network of Phuket, Thailand
+      </li>
+      <li>
+        Engineered a modified Dijkstra's algorithm that computed paths
+        exclusively across network interchange points, achieving a ~25,000x
+        reduction in route-finding runtime.
+      </li>
+      <li>
+        Published algorithmic research as a conference paper at the STT49
+        scientific convention (Prince of Songkhla University), subsequently
+        earning the "Best Oral Presentation" award.
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- Skills-->
+<section class="mb-8">
+  <h3 class="text-accent text-xs uppercase tracking-widest mb-4">Skills</h3>
+  <div class="bg-box border border-boxBorder rounded-xl p-5 space-y-3 text-sm">
+    {% for label, items in [ ("Languages", "Python (NumPy, Pandas, Flask,
+    FastAPI) · Java · SQL") , ("Tools", "Git · SQLite · Linux CLI · Figma"),
+    ("Certifications ", "CS50x: Introduction to Computer Science (HarvardX)"), ]
+    %}
+    <div class="flex gap-3">
+      <span class="text-textMuted w-28 shrink-0">{{ label }}</span>
+      <span class="text-textMain">{{ items }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}

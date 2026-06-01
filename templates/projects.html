@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% block content %}
+
+<h2 class="text-2xl font-semibold text-heading mb-1">Projects</h2>
+<p class="text-textMuted text-sm mb-8">Things I've built.</p>
+
+{% if projects %}
+<div class="flex flex-col gap-4">
+  {% for p in projects %}
+  <a
+    href="/projects/{{ p.slug }}/"
+    class="bg-box border border-boxBorder hover:border-accent rounded-xl p-6 transition-colors group block"
+  >
+    {% if p.image %}
+    <img
+      src="{{ p.image }}"
+      alt="{{ p.title }}"
+      class="w-full h-36 object-cover rounded-lg mb-4 opacity-80 group-hover:opacity-100 transition-opacity"
+    />
+    {% endif %}
+
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <h3
+          class="text-heading font-semibold group-hover:text-accent transition-colors"
+        >
+          {{ p.title }}
+        </h3>
+        <p class="text-textMuted text-sm mt-1 leading-relaxed">
+          {{ p.summary }}
+        </p>
+      </div>
+      <span class="text-textMuted text-xs shrink-0 mt-1">{{ p.date }}</span>
+    </div>
+
+    {% if p.tags %}
+    <div class="flex flex-wrap gap-2 mt-3">
+      {% for tag in p.tags %}
+      <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<p class="text-textMuted">
+  No projects yet, coming soon :)</code>.
+</p>
+{% endif %} {% endblock %}

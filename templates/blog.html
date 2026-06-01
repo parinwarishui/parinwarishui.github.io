@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block content %}
+
+<h2 class="text-2xl font-semibold text-heading mb-1">Blog</h2>
+<p class="text-textMuted text-sm mb-8">
+  Notes and write-ups about things I find interesting or what I've done.
+</p>
+
+{% if posts %}
+<div class="flex flex-col gap-3">
+  {% for p in posts %}
+  <a
+    href="/blog/{{ p.slug }}/"
+    class="bg-box border border-boxBorder hover:border-accent rounded-xl p-5 transition-colors group block"
+  >
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <h3
+          class="text-heading font-medium group-hover:text-accent transition-colors"
+        >
+          {{ p.title }}
+        </h3>
+        <p class="text-textMuted text-sm mt-1">{{ p.summary }}</p>
+      </div>
+      <span class="text-textMuted text-xs shrink-0 mt-1">{{ p.date }}</span>
+    </div>
+
+    {% if p.tags %}
+    <div class="flex flex-wrap gap-2 mt-3">
+      {% for tag in p.tags %}
+      <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<p class="text-textMuted">No posts yet, coming soon :)</p>
+{% endif %} {% endblock %}

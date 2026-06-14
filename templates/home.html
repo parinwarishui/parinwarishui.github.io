@@ -1,54 +1,72 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
 <h2 class="text-2xl font-semibold text-heading mb-2">Hello, I'm Parinwaris!</h2>
-<p class="text-textMuted text-sm mb-8">Computer Science & Design · SUTD · Singapore</p>
+<p class="text-textMuted text-sm mb-8">
+  Computer Science & Design · SUTD · Singapore
+</p>
 
 <div class="bg-box border border-boxBorder rounded-xl p-6 mb-8">
-  <p class="text-textMain leading-relaxed">
-    Hi! I am Parinwaris Pangprasertgul (or Hui for short), a Computer Science student from Thailand studying in Singapore.<br><br>
-    I have a strong passion in <span class="text-accent">data science, data systems,</span> and all things <span class="text-accent">smart city, urban mobility & public transport infrastructure.</span><br><br>
-    My past experiences have been about working on projects that sit between <span class="text-accent">hardware, data, and human-centered systems.</span>
-    I am actively learning new languages, frameworks, and concepts along the way to solidify my skills. <br><br>
+  <div class="text-textMain leading-relaxed">
+    Hi! I am Parinwaris Pangprasertgul (or Hui for short), a Computer Science
+    student from Thailand studying in Singapore.<br /><br />
+    I have a strong passion in
+    <span class="text-accent">data science, data systems,</span> and all things
+    <span class="text-accent"
+      >smart city, urban mobility & public transport infrastructure.</span
+    ><br /><br />
+    My past experiences have been about working on projects that sit between
+    <span class="text-accent">hardware, data, and human-centered systems.</span>
+    I am actively learning new languages, frameworks, and concepts along the way
+    to solidify my skills. <br /><br />
 
     <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-      
-      <div class="bg-background bg-opacity-40 border border-boxBorder rounded-lg p-4 hover:border-accent transition-colors">
-        <h3 class="text-accent text-xs font-mono uppercase tracking-wider mb-2">Languages</h3>
-        <p class="text-textMain text-sm leading-relaxed">
-          Python, Java, SQL
-        </p>
+      <div
+        class="bg-background bg-opacity-40 border border-boxBorder rounded-lg p-4 hover:border-accent transition-colors"
+      >
+        <h3 class="text-accent text-xs font-mono uppercase tracking-wider mb-2">
+          Languages
+        </h3>
+        <p class="text-textMain text-sm leading-relaxed">Python, Java, SQL</p>
       </div>
 
-      <div class="bg-background bg-opacity-40 border border-boxBorder rounded-lg p-4 hover:border-accent transition-colors">
-        <h3 class="text-accent text-xs font-mono uppercase tracking-wider mb-2">Data Tools</h3>
+      <div
+        class="bg-background bg-opacity-40 border border-boxBorder rounded-lg p-4 hover:border-accent transition-colors"
+      >
+        <h3 class="text-accent text-xs font-mono uppercase tracking-wider mb-2">
+          Data Tools
+        </h3>
         <p class="text-textMain text-sm leading-relaxed">
           SQLite, NumPy, Pandas
         </p>
       </div>
 
-      <div class="bg-background bg-opacity-40 border border-boxBorder rounded-lg p-4 hover:border-accent transition-colors">
-        <h3 class="text-accent text-xs font-mono uppercase tracking-wider mb-2">Hardware</h3>
+      <div
+        class="bg-background bg-opacity-40 border border-boxBorder rounded-lg p-4 hover:border-accent transition-colors"
+      >
+        <h3 class="text-accent text-xs font-mono uppercase tracking-wider mb-2">
+          Hardware
+        </h3>
         <p class="text-textMain text-sm leading-relaxed">
           Raspberry Pi, Alchitry FPGA
         </p>
       </div>
-
     </div>
-  </p>
+  </div>
 </div>
 
 <div class="grid grid-cols-2 gap-4">
-  {% for label, href, desc in [
-      ("Projects", "/projects/", "Things I've built"),
-      ("Blog",     "/blog/",     "Notes and write-ups"),
-      ("CV",       "/cv/",       "Education & experience"),
-      ("Search",   "/search/",   "Find anything"),
-  ] %}
-  <a href="{{ href }}"
-     class="bg-box border border-boxBorder hover:border-accent rounded-xl p-5
-            transition-colors group">
-    <p class="text-heading font-medium group-hover:text-accent transition-colors">{{ label }}</p>
+  {% for label, href, desc in [ ("Projects", "/projects/", "Things I've built"),
+  ("Blog", "/blog/", "Notes and write-ups"), ("CV", "/cv/", "Education &
+  experience"), ("Search", "/search/", "Find anything"), ] %}
+  <a
+    href="{{ href }}"
+    class="bg-box border border-boxBorder hover:border-accent rounded-xl p-5 transition-colors group"
+  >
+    <p
+      class="text-heading font-medium group-hover:text-accent transition-colors"
+    >
+      {{ label }}
+    </p>
     <p class="text-textMuted text-xs mt-1">{{ desc }}</p>
   </a>
   {% endfor %}

@@ -21,7 +21,7 @@ PROJECTS_DIR = "content/projects"
 SITE = {
     "name":      "Parinwaris (Hui) Pangprasertgul",
     "title":     "Computer Science & Design · SUTD",
-    "bio":       "Passionate in data science, smart cities, and user experience.",
+    "bio":       "Passionate in backend engineering, data systems, data science, and smart cities.",
     "email":     "parinwaris.pangprasertgul@gmail.com",
     "github":    "https://github.com/parinwarishui",
     "linkedin":  "https://linkedin.com/in/parinwaris-pangprasertgul",

@@ -7,6 +7,16 @@
   ← All posts
 </a>
 
+{% if post.image %}
+<div class="w-full mt-6 mb-6 overflow-hidden rounded-xl">
+  <img
+    src="{{ post.image }}"
+    alt="{{ post.title }}"
+    class="w-full h-auto max-h-[32rem] object-cover"
+  />
+</div>
+{% endif %}
+
 <div class="mt-6 mb-8">
   <h1 class="text-2xl font-semibold text-heading mb-2">{{ post.title }}</h1>
   <div class="flex items-center gap-3 flex-wrap">

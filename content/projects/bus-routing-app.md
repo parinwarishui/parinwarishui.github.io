@@ -1,8 +1,9 @@
 ---
 title: "Phuket Bus Routing Application"
 date: "2024-01-23"
-tags: [python, pyqt5, transport, application, algorithms, buses]
+tags: [python, pyqt5, transport, application]
 summary: "A breakdown of my high school science project - a bus route finding app in Phuket, Thailand using a specialized version of Dijkstra's algorithm."
+image: "/static/img/phothong-bus.jpg"
 ---
 
 ![Image of a Phothong bus in Phuket, Thailand](/static/img/phothong-bus.jpg)

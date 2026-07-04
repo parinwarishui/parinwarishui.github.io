@@ -21,7 +21,7 @@ PROJECTS_DIR = "content/projects"
 SITE = {
     "name":      "Parinwaris (Hui) Pangprasertgul",
     "title":     "Computer Science & Design · SUTD",
-    "bio":       "Passionate in backend engineering, data systems, data science, and smart cities.",
+    "bio":       "Passionate in backend engineering, data systems, data science and smart cities.",
     "email":     "parinwaris.pangprasertgul@gmail.com",
     "github":    "https://github.com/parinwarishui",
     "linkedin":  "https://linkedin.com/in/parinwaris-pangprasertgul",
@@ -60,6 +60,9 @@ def load_content(directory):
       image    — optional hero image path from frontmatter
       content  — HTML string rendered from the markdown body
     """
+    if not os.path.isdir(directory):
+        return []
+
     items = []
 
     for filename in os.listdir(directory):
@@ -89,7 +92,15 @@ def load_content(directory):
 # Routes
 @app.route("/")
 def home():
-    return render_template("home.html", site=SITE, page="home")
+    recent_projects = load_content(PROJECTS_DIR)[:5]
+    recent_posts = load_content(POSTS_DIR)[:5]
+    return render_template(
+        "home.html",
+        site=SITE,
+        page="home",
+        recent_projects=recent_projects,
+        recent_posts=recent_posts,
+    )
 
 
 @app.route("/projects/")

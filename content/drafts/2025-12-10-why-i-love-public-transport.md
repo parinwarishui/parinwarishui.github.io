@@ -31,4 +31,8 @@ Growing up, I noticed that a lot of my hobbies and interests in my life probably
 
 I think all cities deserve a proper public transport system of some kind for the people. I do believe in the freedom of movement, and I do believe that public transport shouldn't have profit as its metric. We do not expect highways or roads to generate profit from people driving cars on them, so why should we expect public transport to make money when its main purpose should be to move people between places?
 
+## Thailand
+
+Looking back at my country, I think Thailand is just a country with tremendous potential for a lot of things, yet we don't really get to see said potential materialized.
+
 ---

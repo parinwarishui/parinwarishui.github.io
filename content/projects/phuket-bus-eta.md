@@ -3,7 +3,7 @@ title: "Phuket Smart Bus ETA API"
 date: "2025-12-01"
 tags: [python, fastapi, flask, transport, geojson]
 summary: "A real-time ETA prediction system for Phuket's SmartBus network, consisting of a FastAPI backend, dynamic ETA calculation, bus fleet dashboard, and accuracy analytics."
-image: ""
+image: "/static/img/bus_eta.png"
 ---
 
 ## Overview

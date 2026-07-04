@@ -3,6 +3,7 @@ title: "Your post title here"
 date: "YYYY-MM-DD"
 tags: [tag1, tag2, tag3]
 summary: "One sentence that describes the post. Shown on the blog list page."
+image: "/static/img/your-thumbnail.png"
 ---
 
 ## Introduction
@@ -11,7 +12,7 @@ Write your opening paragraph here. Explain what this post is about and why it ma
 
 ## Section heading
 
-Regular paragraph text. You can make text **bold** or *italic*.
+Regular paragraph text. You can make text **bold** or _italic_.
 
 ### Subsection heading (shown in mint green)
 
@@ -36,12 +37,12 @@ python app.py
 Place images in static/img/ then reference them like this:
 
 ![Alt text describing the image](/static/img/your-image.png)
-*Caption text goes here on the line directly below the image, in italics.*
+_Caption text goes here on the line directly below the image, in italics._
 
 ## Tables
 
 | Column A | Column B | Column C |
-|----------|----------|----------|
+| -------- | -------- | -------- |
 | Cell 1   | Cell 2   | Cell 3   |
 | Cell 4   | Cell 5   | Cell 6   |
 
@@ -60,4 +61,4 @@ Mention `variable_names`, `functions()`, or `file/paths` inline using single bac
 
 ---
 
-*End of template — delete everything below the --- frontmatter block and above this line when writing a real post.*
+_End of template — delete everything below the --- frontmatter block and above this line when writing a real post._

@@ -8,6 +8,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: write
 
 concurrency:
   group: "pages"
@@ -33,6 +34,22 @@ jobs:
 
       - name: Freeze Flask app
         run: python freeze.py
+
+      - name: Remove stale Pages artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          run_id="${{ github.run_id }}"
+          echo "Checking for existing github-pages artifacts in run $run_id"
+          artifact_ids=$(gh api "/repos/${{ github.repository }}/actions/runs/$run_id/artifacts" --jq '.artifacts[] | select(.name=="github-pages") | .id')
+          if [ -n "$artifact_ids" ]; then
+            echo "$artifact_ids" | while read -r artifact_id; do
+              [ -n "$artifact_id" ] || continue
+              echo "Deleting stale artifact $artifact_id"
+              gh api --method DELETE "/repos/${{ github.repository }}/actions/artifacts/$artifact_id"
+            done
+          fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

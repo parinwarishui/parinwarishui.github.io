@@ -176,4 +176,7 @@ def search():
 
 # dev server
 if __name__ == "__main__":
-    app.run(debug=True)   # http://127.0.0.1:5000
+    import os
+    port = int(os.environ.get("PORT", 8001))
+    print(f"Main site running at http://127.0.0.1:{port}")
+    app.run(debug=True, port=port)
